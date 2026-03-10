@@ -42,6 +42,10 @@ public class UIController : MonoBehaviour
             case GameState.Pause:
                 OpenPauseGameUI();
                 break;
+
+            case GameState.Win:
+                OpenWinGameUI();
+                break;
         }
     }
     private void OpenMenuUI()
@@ -62,6 +66,11 @@ public class UIController : MonoBehaviour
     private void OpenPauseGameUI()
     {
         SetCanvasActive("PauseCanvas");
+    }
+
+    private void OpenWinGameUI()
+    {
+        SetCanvasActive("WinCanvas");
     }
 
     private void SetCanvasActive(string canvasName)

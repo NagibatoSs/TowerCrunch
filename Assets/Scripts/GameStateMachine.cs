@@ -38,4 +38,8 @@ public class GameStateMachine : MonoBehaviour
     {
         SetState(GameState.Pause);
     }
+    public void SetWin()
+    {
+        SetState(GameState.Win);
+    }
 }

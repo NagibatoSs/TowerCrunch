@@ -15,22 +15,6 @@ public class BlockAnimateColor : MonoBehaviour
     private MaterialPropertyBlock block;
     private Color srcEmissionColor;
     private bool initialized;
-
-    private void Awake()
-    {
-        //block = new MaterialPropertyBlock();
-
-        //if (meshRenderer.sharedMaterial.HasProperty("_Smoothness"))
-        //    srcSmoothness = meshRenderer.sharedMaterial.GetFloat("_Smoothness");
-        //else
-        //    srcSmoothness = 0.5f;
-    }
-    //private void Awake()
-    //{
-    //    itemMaterial = meshRenderer.material;
-    //    itemSrcColor = itemMaterial.color;
-    //}
-
     protected IEnumerator AnimateColor()
     {
         while (elapsedTime < animationTime)
@@ -48,14 +32,6 @@ public class BlockAnimateColor : MonoBehaviour
 
                 meshRenderer.SetPropertyBlock(block, i);
             }
-
-            //elapsedTime += Time.deltaTime;
-
-            //meshRenderer.GetPropertyBlock(block);
-            //block.SetColor("_BaseColor",Color.Lerp(itemSrcColor, destinationColor, Mathf.PingPong(2 * elapsedTime / animationTime, 1)));
-            //meshRenderer.SetPropertyBlock(block);
-
-            //itemMaterial.color = Color.Lerp(itemSrcColor, destinationColor, Mathf.PingPong(2 * elapsedTime / animationTime, 1));
             elapsedTime += Time.deltaTime;
         }
 

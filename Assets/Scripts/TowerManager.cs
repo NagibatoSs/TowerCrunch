@@ -27,56 +27,22 @@ public class TowerManager : MonoBehaviour
             currentDetector.OnLanded -= HandleBlockLanded;
         }
 
-        // Сохраняем новый
         currentDetector = detector;
-
-        // Подписываемся
         currentDetector.OnLanded += HandleBlockLanded;
 
     }
     private void HandleBlockLanded(GameObject block)
     {
 
-        StartCoroutine(PushWithCrushSequence(block));
+        StartCoroutine(PushWithCrunchSequence(block));
     }
-
 
     private void Start()
     {
         tower.Push(towerRoot);
     }
 
-    //private void PushNewBlockToTower(GameObject newBlock)
-    //{
-    //    while (tower.Count > 0)
-    //    {
-    //        GameObject peek = tower.Peek;
-    //        if (newBlock.transform.localScale.x > peek.transform.localScale.x)
-    //            CrunchPeekBlock(peek);
-    //        else break;
-    //    }
-    //    if (tower.Count == 0)
-    //    {
-    //        towerRoot = newBlock;
-    //    }
-    //    OnBlockAdded?.Invoke();
-    //    tower.Push(newBlock);
-    //}
-
-    //private void CrunchPeekBlock(GameObject peek)
-    //{
-    //    OnCrunch?.Invoke();
-    //    Destroy(peek);
-    //    tower.Pop();
-    //}
-
-    private void PushNewBlockToTower(GameObject newBlock)
-    {
-        //detector.OnLanded -= PushNewBlockToTower;
-        StartCoroutine(PushWithCrushSequence(newBlock));
-    }
-
-    private IEnumerator PushWithCrushSequence(GameObject newBlock)
+    private IEnumerator PushWithCrunchSequence(GameObject newBlock)
     {
         while (tower.Count > 0)
         {
@@ -90,9 +56,6 @@ public class TowerManager : MonoBehaviour
 
         if (tower.Count == 0)
         {
-            //var anim = newBlock.GetComponent<BlockAnimateColor>();
-            //if (anim != null)
-            //anim.Animate();
             towerRoot = newBlock;
         }
 
