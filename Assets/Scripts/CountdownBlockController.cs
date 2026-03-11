@@ -8,7 +8,8 @@ public class CountdownBlockController : MonoBehaviour
     [SerializeField] TMP_Text timerText;
     [SerializeField] float animationDuration = 0.25f;
     [SerializeField] float goTextDuration = 0.2f;
-    [SerializeField] GameObject countdownGroup;
+    [SerializeField] CanvasGroup countdownGroup;
+    [SerializeField] GameStateMachine gameStateMachine;
     private Transform textTransform;
     public Action OnCountdownFinished;
 
@@ -16,13 +17,36 @@ public class CountdownBlockController : MonoBehaviour
     {
         textTransform = timerText.transform;
     }
-    private void Start()
+
+    private void OnEnable()
+    {
+        gameStateMachine.OnStateChanged += OnStateChangedDelegate;
+    }
+
+    private void OnDisable()
+    {
+        gameStateMachine.OnStateChanged -= OnStateChangedDelegate;
+    }
+
+    private void OnStateChangedDelegate(GameState state)
+    {
+        if (state == GameState.Game)
+        {
+            StartCountdown();
+        }
+    }
+
+    private void StartCountdown()
     {
         timerText.text = "";
         timerText.transform.localScale = Vector3.one;
-        countdownGroup.SetActive(true);
+
+        countdownGroup.alpha = 1;
+        countdownGroup.blocksRaycasts = true;
+
         StartCoroutine(Countdown());
     }
+
 
     private IEnumerator Countdown()
     {
@@ -44,7 +68,8 @@ public class CountdownBlockController : MonoBehaviour
 
         OnCountdownFinished?.Invoke();
 
-        countdownGroup.SetActive(false);
+        countdownGroup.alpha = 0;
+        countdownGroup.blocksRaycasts = false;
     }
 
     IEnumerator PopAnimation()

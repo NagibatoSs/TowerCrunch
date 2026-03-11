@@ -1,9 +1,11 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BlockSpawner : MonoBehaviour
 {
+    [SerializeField] Transform blocksRoot;
     [SerializeField] GameObject[] prefabs;
     [SerializeField] GameStateMachine stateMachine;
     [SerializeField] float spawnDelayInSeconds = 1;
@@ -15,18 +17,28 @@ public class BlockSpawner : MonoBehaviour
     {
         towerManager.OnBlockAdded -= SpawnNewBlock;
     }
-    void Start()
+
+    private void OnEnable()
     {
         towerManager.OnBlockAdded += SpawnNewBlock;
+    }
+    //void Start()
+    //{
+    //    idx = 0;
+    //    Spawn();
+    //}
+
+    public void StartGame()
+    {
         idx = 0;
         Spawn();
     }
+
 
     private void SpawnNewBlock()
     {
         if (lastSpawnFrame == Time.frameCount)
             return;
-
         lastSpawnFrame = Time.frameCount;
         Spawn();
     }
@@ -40,7 +52,7 @@ public class BlockSpawner : MonoBehaviour
         }
         if (prefabs[idx] != null)
         {
-            var block = Instantiate(prefabs[idx], transform.position, Quaternion.identity);
+            var block = Instantiate(prefabs[idx], transform.position, Quaternion.identity, blocksRoot);
             towerManager.SetDependencies(block.GetComponent<LandingDetector>());
             idx++;
         }

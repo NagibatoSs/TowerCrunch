@@ -11,6 +11,7 @@ public class Timer : MonoBehaviour
     float remainingTime = 0f;
     int lastSecond;
     int currentSecond;
+    bool isPause = false;
 
     private void OnEnable()
     {
@@ -22,21 +23,38 @@ public class Timer : MonoBehaviour
         countdownController.OnCountdownFinished -= StartTimer;
     }
 
-    private void Start() //менять на геймстейты
+    private void Start() 
     {
-        OnSecondChanged(Mathf.CeilToInt(startTime));
+        OnSecondChanged?.Invoke(Mathf.CeilToInt(startTime));
+    }
+
+    public void SetTime(float time)
+    {
+        startTime = time;
+        OnSecondChanged?.Invoke(Mathf.CeilToInt(startTime));
+    }
+
+    public void PauseTimer()
+    {
+        isPause = true;
+    }
+
+    public void ResumeTimer()
+    {
+        isPause = false;
     }
 
     public void StartTimer()
     {
         remainingTime = startTime;
         lastSecond = Mathf.CeilToInt(startTime);
-        OnSecondChanged(lastSecond);
+        OnSecondChanged?.Invoke(lastSecond);
     }
 
     private void Update()
     {
         if (remainingTime <= 0) return;
+        if (isPause) return;
 
         remainingTime -= Time.deltaTime;
 

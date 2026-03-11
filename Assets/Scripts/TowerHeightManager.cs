@@ -5,7 +5,7 @@ public class TowerHeightManager : MonoBehaviour
 {
     [SerializeField] TowerManager towerManager;
     public event Action<int> OnHeightChanged;
-    private int height = 1;
+    private int height = 0;
 
     private void OnEnable()
     {

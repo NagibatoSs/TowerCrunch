@@ -4,24 +4,30 @@ using UnityEngine;
 
 public class TowerManager : MonoBehaviour
 {
-    //[SerializeField] LandingDetector detector;
-    [SerializeField] Tower tower;
-    [SerializeField] GameObject towerRoot;
+    [SerializeField] Transform blocksRoot;
     public GameObject TowerRoot => towerRoot;
-    public event Action OnCrunch;
-    public event Action OnBlockAdded;
+    private GameObject towerRoot;
+
+    private Tower tower = new Tower();
     private LandingDetector currentDetector;
 
-    private void OnDisable()
+    public event Action OnCrunch;
+    public event Action OnBlockAdded;
+
+    public void ResetTower()
     {
-        //if (detector != null)
-        //    detector.OnLanded -= PushNewBlockToTower;
+        tower.ClearAndDestroy();
+
+        foreach (Transform child in blocksRoot)
+        {
+            Destroy(child.gameObject);
+        }
+
+        towerRoot = null;
     }
+
     public void SetDependencies(LandingDetector detector)
     {
-        //this.detector = detector;
-        //detector.OnLanded += HandleBlockLanded;
-        // Отписываемся от старого detector
         if (currentDetector != null)
         {
             currentDetector.OnLanded -= HandleBlockLanded;
@@ -33,13 +39,7 @@ public class TowerManager : MonoBehaviour
     }
     private void HandleBlockLanded(GameObject block)
     {
-
         StartCoroutine(PushWithCrunchSequence(block));
-    }
-
-    private void Start()
-    {
-        tower.Push(towerRoot);
     }
 
     private IEnumerator PushWithCrunchSequence(GameObject newBlock)

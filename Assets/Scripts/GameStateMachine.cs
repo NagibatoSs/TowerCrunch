@@ -34,10 +34,6 @@ public class GameStateMachine : MonoBehaviour
         SetState(GameState.EndGame);
     }
 
-    public void SetPause()
-    {
-        SetState(GameState.Pause);
-    }
     public void SetWin()
     {
         SetState(GameState.Win);

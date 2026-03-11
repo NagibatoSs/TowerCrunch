@@ -15,10 +15,15 @@ public class SizeChanger : MonoBehaviour
 
     private void OnEnable()
     {
+        ClickHandler.Instance.OnScreenClick += StopResizing;
+    }
+    private void OnDisable()
+    {
+        if (ClickHandler.Instance != null)
+            ClickHandler.Instance.OnScreenClick -= StopResizing;
     }
     void Start()
     {
-        ClickHandler.Instance.OnScreenClick += StopResizing;
         rigidbody = GetComponent<Rigidbody>();
         maxSize = transform.localScale.x * maxSizeMultiplier;
         minSize = transform.localScale.x * minSizeMultiplier;

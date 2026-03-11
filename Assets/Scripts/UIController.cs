@@ -39,9 +39,6 @@ public class UIController : MonoBehaviour
                 OpenEndGameUI();
                 break;
 
-            case GameState.Pause:
-                OpenPauseGameUI();
-                break;
 
             case GameState.Win:
                 OpenWinGameUI();
@@ -61,11 +58,6 @@ public class UIController : MonoBehaviour
     private void OpenEndGameUI()
     {
         SetCanvasActive("EndGameCanvas");
-    }
-
-    private void OpenPauseGameUI()
-    {
-        SetCanvasActive("PauseCanvas");
     }
 
     private void OpenWinGameUI()
