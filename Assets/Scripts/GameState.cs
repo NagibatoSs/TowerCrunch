@@ -2,6 +2,6 @@ public enum GameState
 {
     Menu,
     Game,
-    EndGame,
+    Lose,
     Win
 }

@@ -8,7 +8,10 @@ public class TowerManager : MonoBehaviour
     public GameObject TowerRoot => towerRoot;
     private GameObject towerRoot;
 
+
     private Tower tower = new Tower();
+    public int BlocksCount => tower.Count;
+
     private LandingDetector currentDetector;
 
     public event Action OnCrunch;
@@ -57,6 +60,7 @@ public class TowerManager : MonoBehaviour
         if (tower.Count == 0)
         {
             towerRoot = newBlock;
+
         }
 
         if (currentDetector != null)
@@ -70,15 +74,14 @@ public class TowerManager : MonoBehaviour
         if (anim != null)
             anim.Animate();
 
-        OnBlockAdded?.Invoke();
         tower.Push(newBlock);
+        OnBlockAdded?.Invoke();
     }
 
     private IEnumerator CrunchPeekBlock(GameObject peek)
     {
         OnCrunch?.Invoke();       
         tower.Pop();
-
 
         yield return new WaitForSeconds(0.015f); 
         Destroy(peek);

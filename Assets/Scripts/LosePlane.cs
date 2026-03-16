@@ -8,7 +8,6 @@ public class LosePlane : MonoBehaviour
     {
         if (towerManager.TowerRoot == other.gameObject)
             return;
-        else
-            gameStateMachine.SetEndGame();
+        gameStateMachine.SetLose();
     }
 }

@@ -3,7 +3,8 @@ using UnityEngine;
 public enum SFXType
 {
     Crunch,
-    BlockSet
+    BlockSet,
+    Coin
 }
 
 [CreateAssetMenu(fileName = "SFXData", menuName = "Scriptable Objects/SFXData", order = 51)]

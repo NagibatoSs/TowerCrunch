@@ -29,9 +29,9 @@ public class GameStateMachine : MonoBehaviour
         SetState(GameState.Game);
     }
 
-    public void SetEndGame()
+    public void SetLose()
     {
-        SetState(GameState.EndGame);
+        SetState(GameState.Lose);
     }
 
     public void SetWin()

@@ -5,30 +5,39 @@ using UnityEngine;
 public class SFXGameBinder : MonoBehaviour
 {
     [SerializeField] private TowerManager towerManager;
+    [SerializeField] private RewardCoinsUIHandler rewardCoins;
     [SerializeField] private SFXController sfxPlayer;
 
     [SerializeField] private SFXData crunchSFX;
     [SerializeField] private SFXData blockSetSFX;
+    [SerializeField] private SFXData coinSFX;
 
     private void OnEnable()
     {
-        towerManager.OnBlockAdded += HandleBlockAdded;
-        towerManager.OnCrunch += HandleCrunch;
+        towerManager.OnBlockAdded += PlayBlockAdded;
+        towerManager.OnCrunch += PlayCrunch;
+        rewardCoins.OnCoinAdd += PlayCoin;
     }
 
     private void OnDisable()
     {
-        towerManager.OnBlockAdded -= HandleBlockAdded;
-        towerManager.OnCrunch -= HandleCrunch;
+        towerManager.OnBlockAdded -= PlayBlockAdded;
+        towerManager.OnCrunch -= PlayCrunch;
+        rewardCoins.OnCoinAdd -= PlayCoin;
     }
 
-    private void HandleBlockAdded()
+    private void PlayBlockAdded()
     {
         sfxPlayer.Play(blockSetSFX);
     }
 
-    private void HandleCrunch()
+    private void PlayCrunch()
     {
         sfxPlayer.Play(crunchSFX);
+    }
+
+    private void PlayCoin()
+    {
+        sfxPlayer.Play(coinSFX);
     }
 }

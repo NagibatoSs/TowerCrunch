@@ -5,26 +5,32 @@ using UnityEngine;
 public class PointsManager : MonoBehaviour
 {
     [SerializeField] TowerManager towerManager;
-    public event Action<int> OnPointsChanged;
-    private int pointsCount = 0;
+    public event Action<int> OnCoinsChanged;
+    private int coinsCount = 0;
+    public int CoinsCount => coinsCount;
 
     private void OnEnable()
     {
-        towerManager.OnCrunch += AddPoint;
+        towerManager.OnCrunch += AddCoin;
     }
     private void OnDisable()
     {
-        towerManager.OnCrunch -= AddPoint;
+        towerManager.OnCrunch -= AddCoin;
+    }
+    public void ResetCoinsCount()
+    {
+        coinsCount = 0;
+        OnCoinsChanged?.Invoke(coinsCount);
     }
 
-    private void AddPoint()
+    private void AddCoin()
     {
         EncreasePoints(1);
     }
 
-    private void EncreasePoints(int points)
+    private void EncreasePoints(int coins)
     {
-        pointsCount += points;
-        OnPointsChanged?.Invoke(pointsCount);
+        coinsCount += coins;
+        OnCoinsChanged?.Invoke(coinsCount);
     }
 }

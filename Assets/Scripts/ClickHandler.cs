@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine.InputSystem;
 
 public class ClickHandler : MonoBehaviour
 {
@@ -17,40 +17,47 @@ public class ClickHandler : MonoBehaviour
 
     void Update()
     {
-        if (Input.touchCount > 0)
+        // Обрабатываем все активные "первичные" действия Pointer (мышь или тач)
+        if (Pointer.current != null && Pointer.current.press.wasPressedThisFrame)
         {
-            var touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
+            Vector2 clickPosition = Pointer.current.position.ReadValue();
+
+            // Проверяем, не по UI ли клик
+            if (IsPointerOverUI(clickPosition))
+                return;
+
+            // Если в Menu, стартуем игру
+            if (stateMachine.CurrentState == GameState.Menu)
             {
-                if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-                {
-                    if (stateMachine.CurrentState == GameState.Menu)
-                    {
-                        stateMachine.SetGame();
-                        return;
-                    }
-                    OnScreenClick?.Invoke();
-                }
+                stateMachine.SetGame();
+                return;
             }
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (!EventSystem.current.IsPointerOverGameObject())
-            {
-                if (stateMachine.CurrentState == GameState.Menu)
-                {
-                    stateMachine.SetGame();
-                    return;
-                }
-                OnScreenClick?.Invoke();
-            }
+
+            OnScreenClick?.Invoke();
+            Debug.Log("CLICK ACCEPTED");
         }
     }
+    private bool IsPointerOverUI(Vector2 screenPosition)
+    {
+        if (EventSystem.current == null)
+            return false;
 
-    //private bool IsPointerOverUI()
-    //{
-    //    if (Input.touchCount > 0)
-    //        return EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
-    //    return EventSystem.current.IsPointerOverGameObject();
-    //}
+        PointerEventData eventData = new PointerEventData(EventSystem.current)
+        {
+            position = screenPosition
+        };
+
+        var results = new System.Collections.Generic.List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        foreach (var r in results)
+        {
+            if (r.gameObject.layer == LayerMask.NameToLayer("UI"))
+                return true;
+        }
+
+        return false;
+    }
 }
+
+

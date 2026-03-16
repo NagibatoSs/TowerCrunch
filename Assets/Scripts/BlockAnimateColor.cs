@@ -3,14 +3,11 @@ using UnityEngine;
 
 public class BlockAnimateColor : MonoBehaviour
 {
-    [SerializeField] private Color destinationColor = Color.white;
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private float animationTime = 0.3f;
     [SerializeField] private float highlightSmoothness = 1f;
     [SerializeField] private Color emissionFlashColor = Color.white * 0.8f;
     private bool isAnimate = false;
-    private Material itemMaterial;
-    private Color itemSrcColor;
     private float elapsedTime;
     private MaterialPropertyBlock block;
     private Color srcEmissionColor;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraFollowing : MonoBehaviour
 {
-    public Tower tower;      // твой скрипт с Stack<GameObject>
+    public Tower tower;  
     public float smoothTime = 0.3f;
     [SerializeField] float cameraOffset = 0f;
     [SerializeField] GameObject spawnPoint;
@@ -17,11 +17,9 @@ public class CameraFollowing : MonoBehaviour
 
         GameObject topBlock = tower.Peek;
 
-        // Целевая позиция камеры (только по Y)
         Vector3 targetPosition = new Vector3(transform.position.x, topBlock.transform.position.y+cameraOffset, transform.position.z);
         Vector3 targetPositionSpawn = new Vector3(spawnPoint.transform.position.x, topBlock.transform.position.y + spawnOffset, spawnPoint.transform.position.z);
 
-        // Плавное движение камеры
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
         spawnPoint.transform.position = targetPositionSpawn;
     }

@@ -22,11 +22,6 @@ public class BlockSpawner : MonoBehaviour
     {
         towerManager.OnBlockAdded += SpawnNewBlock;
     }
-    //void Start()
-    //{
-    //    idx = 0;
-    //    Spawn();
-    //}
 
     public void StartGame()
     {

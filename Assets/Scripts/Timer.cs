@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField] float startTime = 30f;
+    [SerializeField] float startTime;
     [SerializeField] CountdownBlockController countdownController;
+    public int ElapsedTime => Mathf.CeilToInt(startTime - remainingTime);
     public Action<int> OnSecondChanged;
     float remainingTime = 0f;
     int lastSecond;
     int currentSecond;
     bool isPause = false;
+    
 
     private void OnEnable()
     {
@@ -23,10 +25,10 @@ public class Timer : MonoBehaviour
         countdownController.OnCountdownFinished -= StartTimer;
     }
 
-    private void Start() 
-    {
-        OnSecondChanged?.Invoke(Mathf.CeilToInt(startTime));
-    }
+    //private void Start() 
+    //{
+    //    OnSecondChanged?.Invoke(Mathf.CeilToInt(startTime));
+    //}
 
     public void SetTime(float time)
     {
@@ -46,6 +48,7 @@ public class Timer : MonoBehaviour
 
     public void StartTimer()
     {
+        ResumeTimer();
         remainingTime = startTime;
         lastSecond = Mathf.CeilToInt(startTime);
         OnSecondChanged?.Invoke(lastSecond);
