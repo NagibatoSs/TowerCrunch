@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraFollowing : MonoBehaviour
 {
-    public Tower tower;  
+    public TowerManager towerManager;  
     public float smoothTime = 0.3f;
     [SerializeField] float cameraOffset = 0f;
     [SerializeField] GameObject spawnPoint;
@@ -12,10 +12,10 @@ public class CameraFollowing : MonoBehaviour
 
     void LateUpdate()
     {
-        if (tower == null) return;
-        if (tower.Count == 0) return;
+        if (towerManager == null) return;
+        if (towerManager.BlocksCount == 0) return;
 
-        GameObject topBlock = tower.Peek;
+        GameObject topBlock = towerManager.TowerPeek;
 
         Vector3 targetPosition = new Vector3(transform.position.x, topBlock.transform.position.y+cameraOffset, transform.position.z);
         Vector3 targetPositionSpawn = new Vector3(spawnPoint.transform.position.x, topBlock.transform.position.y + spawnOffset, spawnPoint.transform.position.z);

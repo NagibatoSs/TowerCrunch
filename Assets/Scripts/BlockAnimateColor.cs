@@ -5,7 +5,7 @@ public class BlockAnimateColor : MonoBehaviour
 {
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private float animationTime = 0.3f;
-    [SerializeField] private float highlightSmoothness = 1f;
+    //[SerializeField] private float highlightSmoothness = 1f;
     [SerializeField] private Color emissionFlashColor = Color.white * 0.8f;
     private bool isAnimate = false;
     private float elapsedTime;

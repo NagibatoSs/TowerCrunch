@@ -9,22 +9,19 @@ public class RewardSystem : MonoBehaviour
     public Action<int, int> OnReward;
     private void OnEnable()
     {
-        gameStateMachine.OnStateChanged += Reward;
+        gameStateMachine.OnWin += Reward;
     }
     private void OnDisable()
     {
-        gameStateMachine.OnStateChanged -= Reward;
+        gameStateMachine.OnWin -= Reward;
     }
 
-    private void Reward(GameState state)
+    private void Reward()
     {
-        if (state == GameState.Win)
-        {
-            OnReward?.Invoke(playerScriptableModel.Model.Coin, pointManager.CoinsCount);
-            RewardCoins();
-            SetNewNextLevel();
-            playerScriptableModel.Save();
-        }
+        OnReward?.Invoke(playerScriptableModel.Model.Coin, pointManager.CoinsCount);
+        RewardCoins();
+        SetNewNextLevel();
+        playerScriptableModel.Save();
     }
     private void RewardCoins()
     {

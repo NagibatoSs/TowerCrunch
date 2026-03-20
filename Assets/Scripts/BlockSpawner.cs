@@ -8,7 +8,6 @@ public class BlockSpawner : MonoBehaviour
     [SerializeField] Transform blocksRoot;
     [SerializeField] GameObject[] prefabs;
     [SerializeField] GameStateMachine stateMachine;
-    [SerializeField] float spawnDelayInSeconds = 1;
     [SerializeField] TowerManager towerManager;
     private int lastSpawnFrame = -1;
     private int idx;

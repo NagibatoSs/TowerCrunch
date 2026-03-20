@@ -17,16 +17,13 @@ public class ClickHandler : MonoBehaviour
 
     void Update()
     {
-        // Обрабатываем все активные "первичные" действия Pointer (мышь или тач)
         if (Pointer.current != null && Pointer.current.press.wasPressedThisFrame)
         {
             Vector2 clickPosition = Pointer.current.position.ReadValue();
 
-            // Проверяем, не по UI ли клик
             if (IsPointerOverUI(clickPosition))
                 return;
 
-            // Если в Menu, стартуем игру
             if (stateMachine.CurrentState == GameState.Menu)
             {
                 stateMachine.SetGame();
@@ -34,7 +31,6 @@ public class ClickHandler : MonoBehaviour
             }
 
             OnScreenClick?.Invoke();
-            Debug.Log("CLICK ACCEPTED");
         }
     }
     private bool IsPointerOverUI(Vector2 screenPosition)

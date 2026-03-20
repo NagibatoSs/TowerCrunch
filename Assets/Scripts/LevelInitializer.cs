@@ -31,8 +31,6 @@ public class LevelInitializer : MonoBehaviour
         if (levelId > levelsData.Levels.Count - 1) 
             levelId = levelId % levelsData.Levels.Count;
         currentLevel = levelsData.Levels[levelId];
-        Debug.Log("TargetHeight " + TargetHeight);
-        Debug.Log("CurrentLevel " + CurrentLevel);
     }
 
     private void OnStateChangedDelegate(GameState state)

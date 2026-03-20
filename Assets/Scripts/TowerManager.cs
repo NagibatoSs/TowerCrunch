@@ -8,6 +8,8 @@ public class TowerManager : MonoBehaviour
     public GameObject TowerRoot => towerRoot;
     private GameObject towerRoot;
 
+    public GameObject TowerPeek => tower.Peek;
+
 
     private Tower tower = new Tower();
     public int BlocksCount => tower.Count;

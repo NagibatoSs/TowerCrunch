@@ -5,6 +5,7 @@ public class GameStateMachine : MonoBehaviour
 {
     public GameState CurrentState { get; private set; }
     public event Action<GameState> OnStateChanged;
+    public event Action OnWin;
     private void OnEnable()
     {
         CurrentState = GameState.Menu;
@@ -37,5 +38,6 @@ public class GameStateMachine : MonoBehaviour
     public void SetWin()
     {
         SetState(GameState.Win);
+        OnWin?.Invoke();
     }
 }
