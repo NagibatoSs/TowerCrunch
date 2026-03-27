@@ -16,7 +16,7 @@ public class WinBlocksCondition : MonoBehaviour
         towerManager.OnBlockAdded -= CheckWin;
     }
 
-    private void CheckWin()
+    private void CheckWin(GameObject block)
     {
         if (towerManager.BlocksCount >= levelInitializer.TargetHeight)
         {

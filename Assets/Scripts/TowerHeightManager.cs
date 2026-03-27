@@ -24,12 +24,12 @@ public class TowerHeightManager : MonoBehaviour
         height = 0;
         OnHeightChanged?.Invoke(height);
     }
-    private void EncreaseHeight()
+    private void EncreaseHeight(GameObject block)
     {
         height++;
         OnHeightChanged?.Invoke(height);
     }
-    private void DecreaseHeight()
+    private void DecreaseHeight(GameObject block)
     {
         height--;
         OnHeightChanged?.Invoke(height);

@@ -23,14 +23,15 @@ public class PointsManager : MonoBehaviour
         OnCoinsChanged?.Invoke(coinsCount);
     }
 
-    private void AddCoin()
+    private void AddCoin(GameObject block)
     {
-        EncreasePoints(1);
-    }
-
-    private void EncreasePoints(int coins)
-    {
-        coinsCount += coins;
+        coinsCount ++;
         OnCoinsChanged?.Invoke(coinsCount);
     }
+
+    //private void EncreasePoints(int coins)
+    //{
+    //    coinsCount += coins;
+    //    OnCoinsChanged?.Invoke(coinsCount);
+    //}
 }

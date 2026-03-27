@@ -9,6 +9,7 @@ public class TotalCoinsUIHandler : MonoBehaviour
     private void OnEnable()
     {
         playerScriptableModel.Model.OnCoinsChanged += SetCoins;
+        totalCoinsText.text = playerScriptableModel.Model.Coin.ToString();
     }
 
     private void Start()

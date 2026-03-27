@@ -9,6 +9,10 @@ public class LevelInitializer : MonoBehaviour
     [SerializeField] BlockSpawner spawner;
     [SerializeField] GameStateMachine stateMachine;
     [SerializeField] LevelDataReseter levelReseter;
+    [SerializeField] Camera mainCamera;
+
+    Vector3 cameraStartPos;
+    Vector3 spawnStartPos;
     public Action OnInitialize;
     private LevelData currentLevel;
     public int TargetHeight => currentLevel.TargetHeight;
@@ -22,6 +26,15 @@ public class LevelInitializer : MonoBehaviour
     private void OnDisable()
     {
         stateMachine.OnStateChanged -= OnStateChangedDelegate;
+    }
+
+    private void Start()
+    {
+        if (mainCamera != null)
+            cameraStartPos = mainCamera.transform.position;
+
+        if (spawner != null)
+            spawnStartPos = spawner.transform.position;
     }
 
     private void GetCurrentLevel()
@@ -46,6 +59,11 @@ public class LevelInitializer : MonoBehaviour
         GetCurrentLevel();
         timer.SetTime(currentLevel.TimeLimitInSeconds);
         spawner.StartGame();
+
+        var camFollow = mainCamera?.GetComponent<CameraFollowing>();
+        if (camFollow != null)
+            camFollow.ResetPosition(cameraStartPos, spawnStartPos);
+
         OnInitialize?.Invoke();
     }
 

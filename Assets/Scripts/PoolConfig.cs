@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "VFXPoolConfig", menuName = "Scriptable Objects/VFXPoolConfig")]
-public class VFXPoolConfig : ScriptableObject
+[CreateAssetMenu(fileName = "PoolConfig", menuName = "Scriptable Objects/PoolConfig")]
+public class PoolConfig : ScriptableObject
 {
     [SerializeField] private GameObject prefab;
     public GameObject Prefab => prefab;

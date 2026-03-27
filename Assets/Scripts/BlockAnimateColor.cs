@@ -5,14 +5,24 @@ public class BlockAnimateColor : MonoBehaviour
 {
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private float animationTime = 0.3f;
-    //[SerializeField] private float highlightSmoothness = 1f;
     [SerializeField] private Color emissionFlashColor = Color.white * 0.8f;
     private bool isAnimate = false;
     private float elapsedTime;
     private MaterialPropertyBlock block;
     private Color srcEmissionColor;
     private bool initialized;
-    protected IEnumerator AnimateColor()
+
+    public void Animate()
+    {
+        if (isAnimate) return;
+        isAnimate = true;
+        elapsedTime = 0f;
+        if (!initialized) InitEmission();
+        if (this.isActiveAndEnabled)
+            StartCoroutine(AnimateColor());
+    }
+
+    private IEnumerator AnimateColor()
     {
         while (elapsedTime < animationTime)
         {
@@ -40,15 +50,6 @@ public class BlockAnimateColor : MonoBehaviour
         isAnimate = false;
     }
 
-    public void Animate()
-    {
-        if (isAnimate) return;
-        isAnimate = true;
-        elapsedTime = 0f;
-        if (!initialized) InitEmission();
-        StartCoroutine(AnimateColor());
-    }
-    
     private void InitEmission()
     {
         block = new MaterialPropertyBlock();

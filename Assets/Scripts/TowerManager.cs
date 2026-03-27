@@ -8,28 +8,14 @@ public class TowerManager : MonoBehaviour
     public GameObject TowerRoot => towerRoot;
     private GameObject towerRoot;
 
-    public GameObject TowerPeek => tower.Peek;
-
-
     private Tower tower = new Tower();
+    public GameObject TowerPeek => tower.Peek;
     public int BlocksCount => tower.Count;
 
     private LandingDetector currentDetector;
 
-    public event Action OnCrunch;
-    public event Action OnBlockAdded;
-
-    public void ResetTower()
-    {
-        tower.ClearAndDestroy();
-
-        foreach (Transform child in blocksRoot)
-        {
-            Destroy(child.gameObject);
-        }
-
-        towerRoot = null;
-    }
+    public event Action<GameObject> OnCrunch;
+    public event Action<GameObject> OnBlockAdded;
 
     public void SetDependencies(LandingDetector detector)
     {
@@ -37,10 +23,20 @@ public class TowerManager : MonoBehaviour
         {
             currentDetector.OnLanded -= HandleBlockLanded;
         }
-
         currentDetector = detector;
         currentDetector.OnLanded += HandleBlockLanded;
+    }
+    public void ResetTower()
+    {
+        tower.ClearAndDestroy();
 
+        foreach (var poolItem in blocksRoot.GetComponentsInChildren<PoolItem>(true))
+        {
+            if (poolItem.gameObject.activeSelf)
+                poolItem.ReturnToPool();
+        }
+
+        towerRoot = null;
     }
     private void HandleBlockLanded(GameObject block)
     {
@@ -58,34 +54,26 @@ public class TowerManager : MonoBehaviour
             }
             else break;
         }
-
         if (tower.Count == 0)
         {
             towerRoot = newBlock;
-
         }
-
+        
         if (currentDetector != null)
         {
             currentDetector.OnLanded -= HandleBlockLanded;
-            currentDetector.enabled = false;
             currentDetector = null;
         }
-
-        var anim = newBlock.GetComponent<BlockAnimateColor>();
-        if (anim != null)
-            anim.Animate();
-
         tower.Push(newBlock);
-        OnBlockAdded?.Invoke();
+        OnBlockAdded?.Invoke(newBlock);
     }
 
     private IEnumerator CrunchPeekBlock(GameObject peek)
     {
-        OnCrunch?.Invoke();       
+        OnCrunch?.Invoke(peek);
         tower.Pop();
 
-        yield return new WaitForSeconds(0.015f); 
-        Destroy(peek);
+        yield return new WaitForSeconds(0.015f);
+        peek.GetComponent<PoolItem>().ReturnToPool();
     }
 }

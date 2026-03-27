@@ -1,4 +1,3 @@
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,14 +12,14 @@ public class SizeChanger : MonoBehaviour
     private bool isLowering = false;
     private bool isResizing = true;
 
-    private void OnEnable()
+    public void SubscribeResize()
     {
+        ClickHandler.Instance.OnScreenClick -= StopResizing;
         ClickHandler.Instance.OnScreenClick += StopResizing;
     }
-    private void OnDisable()
+    public void UnsubscribeResize()
     {
-        if (ClickHandler.Instance != null)
-            ClickHandler.Instance.OnScreenClick -= StopResizing;
+        ClickHandler.Instance.OnScreenClick -= StopResizing;
     }
     void Start()
     {
@@ -37,25 +36,29 @@ public class SizeChanger : MonoBehaviour
         }
     }
 
+    public void StartResizing()
+    {
+        isResizing = true;
+    }
+
     private void Resize()
     {
-
         if (transform.localScale.x >= maxSize)
             isLowering = true;
         else if (transform.localScale.x <= minSize)
             isLowering = false;
 
         if (!isLowering)
-            transform.localScale += transform.localScale * resizingSpeed * Time.fixedDeltaTime;
+            transform.localScale += transform.localScale * resizingSpeed * Time.deltaTime;
         else
-            transform.localScale -= transform.localScale * resizingSpeed * Time.fixedDeltaTime;
-
+            transform.localScale -= transform.localScale * resizingSpeed * Time.deltaTime;
     }
 
-    public void StopResizing()
+    private void StopResizing()
     {
         rigidbody.isKinematic = false;
         isResizing = false;
-        ClickHandler.Instance.OnScreenClick -= StopResizing;
+        isLowering = false;
     }
+
 }

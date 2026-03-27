@@ -5,7 +5,7 @@ public class LandingDetector : MonoBehaviour
 {
     [SerializeField] float rayOffset = 0.05f;
     [SerializeField] LayerMask mask;
-    private bool isLanded = false;
+    public bool isLanded = false;
     public event Action<GameObject> OnLanded;
 
     private void FixedUpdate()

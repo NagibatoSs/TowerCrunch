@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PlayerScriptableModel
   m_EditorClassIdentifier: 
   model:
-    coin: 4
-    lastLevelNumber: 2
+    coin: 0
+    lastLevelNumber: 1

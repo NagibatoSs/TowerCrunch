@@ -1,26 +1,19 @@
 using UnityEngine;
 
-public class VFXPoolItem : MonoBehaviour
+public class VFXPoolItem : PoolItem
 {
     [SerializeField] private ParticleSystem particleSystem;
-    private VFXPool pool { get; set; }
-
-    public void Init(VFXPool pool)
-    {
-        this.pool = pool;
-    }
 
     private void OnParticleSystemStopped()
     {
         ReturnToPool();
     }
 
-    public void ReturnToPool()
+    public override void OnDespawned()
     {
-        pool.ReturnToPool(this);
     }
 
-    public void OnGetFromPool()
+    public override void OnSpawned()
     {
         if (particleSystem != null)
         {
@@ -28,4 +21,5 @@ public class VFXPoolItem : MonoBehaviour
             particleSystem.Play();
         }
     }
+
 }

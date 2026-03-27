@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelNumber: 3
   targetHeight: 10
-  timeLimitInSeconds: 30
+  timeLimitInSeconds: 45

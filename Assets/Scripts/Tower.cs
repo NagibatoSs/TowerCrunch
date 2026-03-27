@@ -10,11 +10,7 @@ public class Tower
 
     public void ClearAndDestroy()
     {
-        while (tower.Count > 0)
-        {
-            var block = tower.Pop();
-            Object.Destroy(block);
-        }
+        tower.Clear();
     }
 
     public void Push(GameObject block)

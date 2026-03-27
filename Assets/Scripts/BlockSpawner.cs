@@ -5,50 +5,42 @@ using UnityEngine.UI;
 
 public class BlockSpawner : MonoBehaviour
 {
-    [SerializeField] Transform blocksRoot;
-    [SerializeField] GameObject[] prefabs;
+    //[SerializeField] Transform blocksRoot;
     [SerializeField] GameStateMachine stateMachine;
     [SerializeField] TowerManager towerManager;
-    private int lastSpawnFrame = -1;
-    private int idx;
-
-    private void OnDisable()
-    {
-        towerManager.OnBlockAdded -= SpawnNewBlock;
-    }
-
+    [SerializeField] Pool[] pools;
+    private int poolIdx;
     private void OnEnable()
     {
         towerManager.OnBlockAdded += SpawnNewBlock;
     }
-
+    private void OnDisable()
+    {
+        towerManager.OnBlockAdded -= SpawnNewBlock;
+    }
     public void StartGame()
     {
-        idx = 0;
+        poolIdx = 0;
         Spawn();
     }
 
-
-    private void SpawnNewBlock()
+    private void SpawnNewBlock(GameObject newBlock)
     {
-        if (lastSpawnFrame == Time.frameCount)
-            return;
-        lastSpawnFrame = Time.frameCount;
         Spawn();
     }
-
 
     private void Spawn()
     {
-        if (idx == prefabs.Length)
+        if (poolIdx == pools.Length)
         {
-            idx = 0;
+            poolIdx = 0;
         }
-        if (prefabs[idx] != null)
-        {
-            var block = Instantiate(prefabs[idx], transform.position, Quaternion.identity, blocksRoot);
-            towerManager.SetDependencies(block.GetComponent<LandingDetector>());
-            idx++;
-        }
+        var block = pools[poolIdx].GetFromPool();
+        block.transform.SetParent(pools[poolIdx].transform);
+        block.transform.position = transform.position;
+        block.transform.rotation = Quaternion.identity;
+        towerManager.SetDependencies(block.GetComponent<LandingDetector>());
+        poolIdx++;
+
     }
 }

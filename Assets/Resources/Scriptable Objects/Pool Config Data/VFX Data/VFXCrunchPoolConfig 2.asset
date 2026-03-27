@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77d1369cd5a2c4540b181bb64e7d837b, type: 3}
-  m_Name: VFXPoolConfig
+  m_Name: VFXCrunchPoolConfig 2
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4177851809383569881, guid: b9dd0e06010d14746b5d012bceb33369, type: 3}
-  initialSize: 1
+  prefab: {fileID: 6658744771944263749, guid: b249a08a144c70a41b87d2c0b5a371b6, type: 3}
+  initialSize: 4

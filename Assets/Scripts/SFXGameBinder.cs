@@ -26,12 +26,12 @@ public class SFXGameBinder : MonoBehaviour
         rewardCoins.OnCoinAdd -= PlayCoin;
     }
 
-    private void PlayBlockAdded()
+    private void PlayBlockAdded(GameObject block)
     {
         sfxPlayer.Play(blockSetSFX);
     }
 
-    private void PlayCrunch()
+    private void PlayCrunch(GameObject block)
     {
         sfxPlayer.Play(crunchSFX);
     }
