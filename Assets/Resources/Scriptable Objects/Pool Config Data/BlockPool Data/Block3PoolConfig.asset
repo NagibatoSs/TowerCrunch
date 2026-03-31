@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Block3PoolConfig
   m_EditorClassIdentifier: 
   prefab: {fileID: 5144134993718921252, guid: 4553e97c36a72fd46ac48feb2dff0274, type: 3}
-  initialSize: 2
+  initialSize: 4
